@@ -14,7 +14,7 @@ namespace BlazorCaptcha
     {
 
         [Parameter]
-        public int Width { get; set; } = 170;
+        public int Width { get; set; } = 270;
 
         [Parameter]
         public int Height { get; set; } = 40;
@@ -68,9 +68,10 @@ namespace BlazorCaptcha
 
             RandomValue = new Random();
 
-            _BackgroundColor = Color.FromArgb(RandomValue.Next(100, 256), RandomValue.Next(100, 256), RandomValue.Next(100, 256)); ;
+            //_BackgroundColor = Color.FromArgb(RandomValue.Next(100, 256), RandomValue.Next(100, 256), RandomValue.Next(100, 256)); ;
+            _BackgroundColor = Color.White;
 
-            var fontFamilies = new string[] { "Courier", "Arial", "Verdana", "Times New Roman" };
+            var fontFamilies = new string[] {  "Times New Roman" };
 
             Letters = new List<Letter>();
 
@@ -82,7 +83,7 @@ namespace BlazorCaptcha
                     {
                         Value = c.ToString(),
                         Angle = RandomValue.Next(-20, 20),
-                        ForeColor = Color.FromArgb(RandomValue.Next(256), RandomValue.Next(256), RandomValue.Next(256)),
+                        ForeColor = Color.Black,
                         Family = fontFamilies[RandomValue.Next(0, fontFamilies.Length)],
                     };
                     letter.Font =  new Font(letter.Family, RandomValue.Next(Height / 2, (Height / 2) + (Height / 4)), FontStyle.Bold);
@@ -124,12 +125,12 @@ namespace BlazorCaptcha
                 x += textSize.Width;
             }
 
-            foreColor = Color.FromArgb(RandomValue.Next(256), RandomValue.Next(256), RandomValue.Next(256));
+            //foreColor = Color.FromArgb(RandomValue.Next(256), RandomValue.Next(256), RandomValue.Next(256));
 
-            pen = new Pen(foreColor, 0.8f);
-            g.DrawEllipse(pen, RandomValue.Next(-Width, Width), RandomValue.Next(-Height, Height), Width, Height);
-            g.DrawLine(pen, 0, RandomValue.Next(0, Height), Width, RandomValue.Next(0, Height));
-            g.DrawLine(pen, 0, RandomValue.Next(0, Height), Width, RandomValue.Next(0, Height));
+            //pen = new Pen(foreColor, 0.8f);
+            //g.DrawEllipse(pen, RandomValue.Next(-Width, Width), RandomValue.Next(-Height, Height), Width, Height);
+            //g.DrawLine(pen, 0, RandomValue.Next(0, Height), Width, RandomValue.Next(0, Height));
+            //g.DrawLine(pen, 0, RandomValue.Next(0, Height), Width, RandomValue.Next(0, Height));
 
 
             MemoryStream ms = new MemoryStream();
@@ -144,6 +145,7 @@ namespace BlazorCaptcha
             {
                 builder.OpenElement(++seq, "img");
                 builder.AddAttribute(++seq, "src", img);
+                builder.AddAttribute(++seq, "width", Width);
                 builder.CloseElement(); 
 
                 builder.OpenElement(++seq, "button");
